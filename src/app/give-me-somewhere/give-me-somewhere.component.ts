@@ -1,46 +1,45 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 import { Http } from '@angular/http';
-import { IPlanet } from '../planet.model';
+import { IPlanet } from '../model/planet.model';
+import { PlanetService } from '../service/planet.service';
 
 @Component({
   selector: 'app-give-me-somewhere',
   templateUrl: './give-me-somewhere.component.html',
   styleUrls: ['./give-me-somewhere.component.scss']
 })
-export class GiveMeSomewhereComponent implements OnInit, OnChanges {
+export class GiveMeSomewhereComponent implements OnInit {
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    private planetService: PlanetService
+  ) { }
 
-  planet: IPlanet;
-  planets = 0;
   @Input() chosenPlace: IPlanet;
   @Output() browsePlaces: EventEmitter<string> = new EventEmitter();
+  @Output() newPlace: EventEmitter<IPlanet> = new EventEmitter();
 
   ngOnInit() {
     this.http.get('https://swapi.co/api/planets')
-      .subscribe(response => this.planets = response.json().count
+      .subscribe(response => this.planetService.setPlanetCount(response.json().count)
     );
-    this.planet = this.chosenPlace;
-  }
-
-  ngOnChanges() {
-    this.planet = this.chosenPlace;
   }
 
   giveMeSomewhere() {
-    const rand =  Math.floor(Math.random() * this.planets) + 1;
+    const rand =  Math.floor(Math.random() * this.planetService.getPlanetCount()) + 1;
     this.http.get('https://swapi.co/api/planets/' + rand)
       .subscribe(response => {
-        const planet = response.json();
-        this.planet = <IPlanet>{
-          name: planet.name,
-          climate: planet.climate,
-          gravity: planet.gravity,
-          population: planet.population,
-          terrain: planet.terrain,
-          hoursPerDay: planet.rotation_period,
-          daysPerYear: planet.orbital_period,
+        const responseJson = response.json();
+        const planet = <IPlanet>{
+          name: responseJson.name,
+          climate: responseJson.climate,
+          gravity: responseJson.gravity,
+          population: responseJson.population,
+          terrain: responseJson.terrain,
+          hoursPerDay: responseJson.rotation_period,
+          daysPerYear: responseJson.orbital_period,
         };
+        this.newPlace.emit(planet);
       }
     );
   }

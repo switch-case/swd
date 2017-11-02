@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { IPlanet } from '../planet.model';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
+import { IPlanet } from '../model/planet.model';
+import { PlanetService } from '../service/planet.service';
 import { Http } from '@angular/http';
 
 @Component({
@@ -12,18 +13,25 @@ import { Http } from '@angular/http';
     }
   `]
 })
-export class BrowsePlacesComponent implements OnInit {
+export class BrowsePlacesComponent implements OnChanges {
 
   constructor(
-    private http: Http
+    private http: Http,
+    private planetService: PlanetService
   ) { }
 
+  planetCount = 0;
   places: IPlanet[] = [];
   page = 1;
   @Output() placeClicked: EventEmitter<IPlanet> = new EventEmitter();
   @Input() browsingPlaces: boolean;
-  ngOnInit() {
-    this.loadPlaces(this.page);
+  @Input() chosenPlace: IPlanet;
+
+  ngOnChanges() {
+    if (this.places.length < 1 && this.browsingPlaces) {
+      this.loadPlaces(this.page);
+      this.planetCount = this.planetService.getPlanetCount();
+    }
   }
 
   loadMore() {

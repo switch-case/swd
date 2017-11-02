@@ -1,6 +1,6 @@
 <div *ngIf="browsingPlaces" class="row">
   <div *ngFor="let planet of places" class="col-md-3">
-    <div class="card mt-3" (click)="updatePlace(planet)" style="cursor: pointer;">
+    <div class="card mt-3" [ngClass]="{chosen: planet?.name == chosenPlace?.name}" (click)="updatePlace(planet)" style="cursor: pointer;">
       <div class="card-body" *ngIf="planet">
           <h4 class="card-title">{{planet?.name | capitalize}}</h4>
           <div>Climate: {{planet?.climate | capitalize}}</div>
@@ -12,7 +12,7 @@
         </div>
     </div>
   </div>
-  <div *ngIf="places.length > 0" (click)="loadMore()" class="col-md-3">
+  <div *ngIf="places.length > 0 && places.length < planetCount" (click)="loadMore()" class="col-md-3">
     <div class="card mt-3" style="cursor: pointer; text-align: center">
       <div class="card-body"><h2>Load More</h2></div>
     </div>

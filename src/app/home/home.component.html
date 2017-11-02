@@ -1,13 +1,21 @@
 <div class="row">
   <div class="col-md-6">
-    <app-give-me-someone [chosenPerson]="chosenPerson" (browsePeople)="browsePeople($event)"></app-give-me-someone>
+    <app-give-me-someone
+      [chosenPerson]="chosenPerson"
+      (browsePeople)="browsePeople($event)"
+      (newPerson)="newPerson($event)"
+    ></app-give-me-someone>
   </div>
   <div class="col-md-6">
-    <app-give-me-somewhere [chosenPlace]="chosenPlace" (browsePlaces)="browsePlaces($event)"></app-give-me-somewhere>
+    <app-give-me-somewhere
+      [chosenPlace]="chosenPlace"
+      (browsePlaces)="browsePlaces($event)"
+      (newPlace)="newPlace($event)"
+    ></app-give-me-somewhere>
   </div>
 </div>
 
-<app-browse-people (personClicked)="updatePerson($event)" [browsingPeople]="browsingPeople"></app-browse-people>
-<app-browse-places (placeClicked)="updatePlace($event)" [browsingPlaces]="browsingPlaces"></app-browse-places>
+<app-browse-people (personClicked)="updatePerson($event)" [chosenPerson]="chosenPerson" [browsingPeople]="browsingPeople"></app-browse-people>
+<app-browse-places (placeClicked)="updatePlace($event)" [chosenPlace]="chosenPlace" [browsingPlaces]="browsingPlaces"></app-browse-places>
 
 <br/>
