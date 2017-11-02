@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { IPerson } from '../person.model';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
+import { IPerson } from '../model/person.model';
 import { Http } from '@angular/http';
-import { PeopleService } from '../people.service';
+import { PeopleService } from '../service/people.service';
 
 @Component({
   selector: 'app-browse-people',
@@ -13,20 +13,26 @@ import { PeopleService } from '../people.service';
   }
   `]
 })
-export class BrowsePeopleComponent implements OnInit {
+export class BrowsePeopleComponent implements OnChanges {
   constructor(
     private http: Http,
     private peopleService: PeopleService
   ) { }
 
+  peopleCount = 0;
   people: IPerson[] = [];
   pendingPeople: IPerson[] = [];
   page = 1;
   @Output() personClicked: EventEmitter<IPerson> = new EventEmitter();
   @Input() browsingPeople: boolean;
-  async ngOnInit() {
-    await this.loadPeople(this.page);
-    this.loadDetails();
+  @Input() chosenPerson: IPerson;
+
+  async ngOnChanges() {
+    if (this.people.length < 1 && this.browsingPeople) {
+      await this.loadPeople(this.page);
+      this.loadDetails();
+      this.peopleCount = this.peopleService.getPeopleCount();
+    }
   }
 
   async loadMore() {

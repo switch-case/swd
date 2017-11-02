@@ -5,6 +5,8 @@ export class PeopleService {
 
   constructor() { }
 
+  peopleCount = 0;
+
   convertFeet(height) {
     height = +height * 0.0328084;
     if (!!height) {
@@ -19,5 +21,13 @@ export class PeopleService {
       return (height % 1 * 12).toFixed(1) + '\'\'';
     }
     return '';
+  }
+
+  setPeopleCount(count) {
+    this.peopleCount = count;
+  }
+
+  getPeopleCount() {
+    return this.peopleCount;
   }
 }

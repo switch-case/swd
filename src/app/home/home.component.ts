@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IPerson } from '../person.model';
-import { IPlanet } from '../planet.model';
+import { IPerson } from '../model/person.model';
+import { IPlanet } from '../model/planet.model';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +10,10 @@ import { IPlanet } from '../planet.model';
 export class HomeComponent implements OnInit {
   browsingPeople = false;
   browsingPlaces = false;
+
+  placeCount = 0;
+  peopleCount = 0;
+
   chosenPerson: IPerson = undefined;
   chosenPlace: IPlanet = undefined;
 
@@ -22,10 +26,16 @@ export class HomeComponent implements OnInit {
     this.browsingPeople = true;
     this.browsingPlaces = false;
   }
-
+  newPerson(person) {
+    this.chosenPerson = person;
+  }
   browsePlaces() {
     this.browsingPeople = false;
     this.browsingPlaces = true;
+  }
+
+  newPlace(place) {
+    this.chosenPlace = place;
   }
 
   updatePerson(person) {

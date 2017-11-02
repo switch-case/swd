@@ -1,6 +1,6 @@
 <div *ngIf="browsingPeople" class="row">
   <div *ngFor="let person of people" class="col-md-3">
-    <div class="card mt-3" (click)="updatePerson(person)" style="cursor: pointer;">
+    <div class="card mt-3" [ngClass]="{chosen: person?.name == chosenPerson?.name}" (click)="updatePerson(person)" style="cursor: pointer;">
       <div class="card-body" *ngIf="person && person?.species">
         <h4 class="card-title">{{person?.name | capitalize}}</h4>
         <div>Height: {{person?.height}}</div>
@@ -12,7 +12,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="people.length > 0" (click)="loadMore()" class="col-md-3">
+  <div *ngIf="people.length > 0 && people.length < peopleCount" (click)="loadMore()" class="col-md-3">
     <div class="card mt-3" style="cursor: pointer; text-align: center">
       <div class="card-body"><h2>Load More</h2></div>
     </div>

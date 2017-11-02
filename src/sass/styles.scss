@@ -8,6 +8,10 @@ button { cursor: pointer; }
   min-height: 246px;
 }
 
+.card.chosen {
+  border: 2px solid green;
+}
+
 @media (min-width: 1600px) {
   .container{
       max-width: 1440px;
