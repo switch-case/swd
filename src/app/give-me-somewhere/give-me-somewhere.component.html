@@ -1,0 +1,18 @@
+<div class="card">
+  <button class="btn btn-primary" (click)="giveMeSomewhere()">Give me somewhere{{!!planet ? ' else' : ''}}!</button>
+  <div class="card-body" *ngIf="planet">
+    <h4 class="card-title">{{planet?.name | capitalize}}</h4>
+    <div>Climate: {{planet?.climate | capitalize}}</div>
+    <div>Gravity: {{planet?.gravity | capitalize}}</div>
+    <div>Population: {{planet?.population | population}}</div>
+    <div>Terrain: {{planet?.terrain | capitalize}}</div>
+    <div>Days/year: {{planet?.daysPerYear}}</div>
+    <div>Hours/day: {{planet?.hoursPerDay}}</div>
+  </div>
+</div>
+<br/>
+<div class="card">
+  <button class="btn btn-primary" (click)="browse()">Browse Planets</button>
+</div>
+
+

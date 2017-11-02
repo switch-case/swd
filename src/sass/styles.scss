@@ -1,0 +1,15 @@
+@import './variables';
+@import './mixins';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+button { cursor: pointer; }
+
+.card-body {
+  min-height: 246px;
+}
+
+@media (min-width: 1600px) {
+  .container{
+      max-width: 1440px;
+  }
+}
