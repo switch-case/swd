@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
-import { IPerson } from '../model/person.model';
+import { IPerson } from '../../model/person.model';
 import { Http } from '@angular/http';
-import { PeopleService } from '../service/people.service';
+import { PeopleService } from '../../service/people.service';
 
 @Component({
   selector: 'app-give-me-someone',
@@ -27,10 +27,12 @@ export class GiveMeSomeoneComponent implements OnInit {
     this.http.get('https://swapi.co/api/people/' + rand)
       .subscribe(response => {
         const responseJson = response.json();
+        const id = responseJson.url.split('/').slice(-2)[0];
         const person = <IPerson>{
           name: responseJson.name,
           height: this.peopleService.convertFeet(responseJson.height) + this.peopleService.convertInches(responseJson.height),
           speciesUrl: responseJson.species[0],
+          id,
           species: {}
         };
 

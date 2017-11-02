@@ -1,6 +1,7 @@
 <div class="card">
   <button class="btn btn-primary" (click)="giveMeSomeone()">Give me someone{{!!chosenPerson ? ' else' : ''}}!</button>
-  <div class="card-body" *ngIf="chosenPerson && chosenPerson?.species">
+  <div class="card-body" *ngIf="chosenPerson && chosenPerson?.species"
+    [routerLink]="['/details/person', chosenPerson?.id]" style="cursor: pointer;">
     <h4 class="card-title">{{chosenPerson?.name | capitalize}}</h4>
     <div>Height: {{chosenPerson?.height}}</div>
     <div>Species: {{chosenPerson?.species?.name | capitalize}}</div>

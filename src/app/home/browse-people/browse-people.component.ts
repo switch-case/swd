@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
-import { IPerson } from '../model/person.model';
+import { IPerson } from '../../model/person.model';
 import { Http } from '@angular/http';
-import { PeopleService } from '../service/people.service';
+import { PeopleService } from '../../service/people.service';
 
 @Component({
   selector: 'app-browse-people',

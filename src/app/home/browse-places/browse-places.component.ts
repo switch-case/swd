@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
-import { IPlanet } from '../model/planet.model';
-import { PlanetService } from '../service/planet.service';
+import { IPlanet } from '../../model/planet.model';
+import { PlanetService } from '../../service/planet.service';
 import { Http } from '@angular/http';
 
 @Component({

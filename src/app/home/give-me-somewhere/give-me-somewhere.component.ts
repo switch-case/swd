@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 import { Http } from '@angular/http';
-import { IPlanet } from '../model/planet.model';
-import { PlanetService } from '../service/planet.service';
+import { IPlanet } from '../../model/planet.model';
+import { PlanetService } from '../../service/planet.service';
 
 @Component({
   selector: 'app-give-me-somewhere',
@@ -30,6 +30,7 @@ export class GiveMeSomewhereComponent implements OnInit {
     this.http.get('https://swapi.co/api/planets/' + rand)
       .subscribe(response => {
         const responseJson = response.json();
+        const id = responseJson.url.split('/').slice(-2)[0];
         const planet = <IPlanet>{
           name: responseJson.name,
           climate: responseJson.climate,
@@ -38,6 +39,7 @@ export class GiveMeSomewhereComponent implements OnInit {
           terrain: responseJson.terrain,
           hoursPerDay: responseJson.rotation_period,
           daysPerYear: responseJson.orbital_period,
+          id
         };
         this.newPlace.emit(planet);
       }

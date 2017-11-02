@@ -6,4 +6,5 @@ export interface IPlanet {
   terrain: string;
   hoursPerDay: string;
   daysPerYear: string;
+  id: string;
 }

@@ -3,7 +3,6 @@ import { IPerson } from '../model/person.model';
 import { IPlanet } from '../model/planet.model';
 
 @Component({
-  selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
