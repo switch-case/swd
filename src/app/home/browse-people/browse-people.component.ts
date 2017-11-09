@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
-import { IPerson } from '../model/person.model';
+import { IPerson } from '../../model/person.model';
 import { Http } from '@angular/http';
-import { PeopleService } from '../service/people.service';
+import { PeopleService } from '../../service/people.service';
 
 @Component({
   selector: 'app-browse-people',
@@ -45,11 +45,12 @@ export class BrowsePeopleComponent implements OnChanges {
     const response = await this.http.get('https://swapi.co/api/people/?page=' + pageNum).toPromise();
     this.pendingPeople = this.pendingPeople.concat(
       response.json().results.map(
-        person => {
+        (person, index) => {
           return <IPerson>{
             name: person.name,
             height: this.peopleService.convertFeet(person.height) + this.peopleService.convertInches(person.height),
             speciesUrl: person.species[0],
+            id: person.url.split('/').splice(-2, 1)[0],
             species: {}
           };
         }

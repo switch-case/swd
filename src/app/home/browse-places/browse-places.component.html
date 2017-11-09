@@ -12,9 +12,9 @@
         </div>
     </div>
   </div>
-  <div *ngIf="places.length > 0 && places.length < planetCount" (click)="loadMore()" class="col-md-3">
+  <div *ngIf="places?.length > 0 && places?.length < planetCount" (click)="loadMore()" class="col-md-3">
     <div class="card mt-3" style="cursor: pointer; text-align: center">
-      <div class="card-body"><h2>Load More</h2></div>
+      <div class="card-body"><h2>Load More</h2><i class="fa fa-plus" style="font-size: 4em;"></i></div>
     </div>
   </div>
 </div>

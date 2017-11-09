@@ -3,4 +3,5 @@ export interface IPerson {
   speciesUrl: string;
   species: any;
   height: string;
+  id: string;
 }

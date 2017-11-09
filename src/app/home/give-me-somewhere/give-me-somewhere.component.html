@@ -1,6 +1,6 @@
 <div class="card">
   <button class="btn btn-primary" (click)="giveMeSomewhere()">Give me somewhere{{!!chosenPlace ? ' else' : ''}}!</button>
-  <div class="card-body" *ngIf="chosenPlace">
+  <div class="card-body" *ngIf="chosenPlace" [routerLink]="['/details/planet', chosenPlace?.id]" style="cursor: pointer;">
     <h4 class="card-title">{{chosenPlace?.name | capitalize}}</h4>
     <div>Climate: {{chosenPlace?.climate | capitalize}}</div>
     <div>Gravity: {{chosenPlace?.gravity | capitalize}}</div>
