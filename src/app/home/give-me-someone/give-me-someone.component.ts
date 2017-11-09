@@ -22,32 +22,9 @@ export class GiveMeSomeoneComponent implements OnInit {
       .subscribe(response => this.peopleService.setPeopleCount(response.json().count));
   }
 
-  giveMeSomeone() {
+  async giveMeSomeone() {
     const rand =  Math.floor(Math.random() * this.peopleService.getPeopleCount()) + 1;
-    this.http.get('https://swapi.co/api/people/' + rand)
-      .subscribe(response => {
-        const responseJson = response.json();
-        const id = responseJson.url.split('/').slice(-2)[0];
-        const person = <IPerson>{
-          name: responseJson.name,
-          height: this.peopleService.convertFeet(responseJson.height) + this.peopleService.convertInches(responseJson.height),
-          speciesUrl: responseJson.species[0],
-          id,
-          species: {}
-        };
-
-        // Fetch the species details for the new person
-        this.http.get(person.speciesUrl)
-          .subscribe(speciesResponse => {
-            person.species = speciesResponse.json();
-            const height = person.species.average_height;
-            person.species.height = this.peopleService.convertFeet(height) + this.peopleService.convertInches(height);
-            // Give parent component the new person
-            this.newPerson.emit(person);
-          }
-        );
-      }
-    );
+    this.newPerson.emit(await this.peopleService.getPerson(rand));
   }
 
   browse() {

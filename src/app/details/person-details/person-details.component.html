@@ -1,3 +1,11 @@
-<p>
-  person-details works!
-</p>
+<div class="card">
+  <div class="card-body" *ngIf="person && person?.species">
+    <h4 class="card-title">{{person?.name | capitalize}}</h4>
+    <div>Height: {{person?.height}}</div>
+    <div>Species: {{person?.species?.name | capitalize}}</div>
+    <div>Classification: {{person?.species?.classification | capitalize}}</div>
+    <div>Avg. Height: {{person?.species?.height}}</div>
+    <div>Avg. Lifespan: {{person?.species?.average_lifespan | capitalize}}</div>
+    <div>Language: {{person?.species?.language | capitalize}}</div>
+  </div>
+</div>
