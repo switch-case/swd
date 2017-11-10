@@ -21,55 +21,30 @@ export class BrowsePeopleComponent implements OnChanges {
 
   peopleCount = 0;
   people: IPerson[] = [];
-  pendingPeople: IPerson[] = [];
-  page = 1;
   @Output() personClicked: EventEmitter<IPerson> = new EventEmitter();
   @Input() browsingPeople: boolean;
   @Input() chosenPerson: IPerson;
 
+  // ngOnInit() {
+  //   if (this.peopleService.people.length > 0 && this.browsingPeople) {
+  //     this.peopleCount = this.peopleService.getPeopleCount();
+  //     this.people = this.peopleService.people;
+  //   }
+  // }
+
   async ngOnChanges() {
-    if (this.people.length < 1 && this.browsingPeople) {
-      await this.loadPeople(this.page);
-      this.loadDetails();
+    if (this.browsingPeople) {
+      if (this.peopleService.people.length < 1) {
+        await this.peopleService.loadPeople();
+      }
       this.peopleCount = this.peopleService.getPeopleCount();
+      this.people = this.peopleService.people;
     }
   }
 
   async loadMore() {
-    this.page++;
-    await this.loadPeople(this.page);
-    this.loadDetails();
-  }
-
-  async loadPeople(pageNum) {
-    const response = await this.http.get('https://swapi.co/api/people/?page=' + pageNum).toPromise();
-    this.pendingPeople = this.pendingPeople.concat(
-      response.json().results.map(
-        (person, index) => {
-          return <IPerson>{
-            name: person.name,
-            height: this.peopleService.convertFeet(person.height) + this.peopleService.convertInches(person.height),
-            speciesUrl: person.species[0],
-            id: person.url.split('/').splice(-2, 1)[0],
-            species: {}
-          };
-        }
-      )
-    );
-  }
-
-  loadDetails() {
-    this.pendingPeople.forEach(person =>
-      this.http.get(person.speciesUrl)
-        .subscribe(speciesResponse => {
-          person.species = speciesResponse.json();
-          const height = person.species.average_height;
-          person.species.height = this.peopleService.convertFeet(height) + this.peopleService.convertInches(height);
-        }
-      )
-    );
-    this.people = this.people.concat(this.pendingPeople);
-    this.pendingPeople = [];
+    await this.peopleService.loadMore();
+    this.people = this.peopleService.people;
   }
 
   updatePerson(person) {
