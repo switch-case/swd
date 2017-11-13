@@ -25,13 +25,6 @@ export class BrowsePeopleComponent implements OnChanges {
   @Input() browsingPeople: boolean;
   @Input() chosenPerson: IPerson;
 
-  // ngOnInit() {
-  //   if (this.peopleService.people.length > 0 && this.browsingPeople) {
-  //     this.peopleCount = this.peopleService.getPeopleCount();
-  //     this.people = this.peopleService.people;
-  //   }
-  // }
-
   async ngOnChanges() {
     if (this.browsingPeople) {
       if (this.peopleService.people.length < 1) {

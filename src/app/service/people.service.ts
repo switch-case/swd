@@ -11,7 +11,8 @@ export class PeopleService {
   pendingPeople: IPerson[] = [];
   peopleCount = 0;
   pageNum = 1;
-  API_URL = 'https://swapi.co/api/people';
+  chosenPerson: IPerson;
+  API_URL = 'https://swapi.co/api/people/';
 
   convertFeet(height) {
     height = +height * 0.0328084;
@@ -35,7 +36,7 @@ export class PeopleService {
   }
 
   async loadPeople() {
-    const response = await this.http.get('https://swapi.co/api/people/?page=' + this.pageNum).toPromise();
+    const response = await this.http.get(`${this.API_URL}?page=${this.pageNum}`).toPromise();
     this.pendingPeople = this.pendingPeople.concat(
       response.json().results.map(
         (person, index) => {
@@ -67,7 +68,7 @@ export class PeopleService {
   }
 
   async getPerson(id): Promise<IPerson> {
-    const response = await this.http.get('https://swapi.co/api/people/' + id).toPromise();
+    const response = await this.http.get(`${this.API_URL}${id}`).toPromise();
     const responseJson = response.json();
     const person = <IPerson>{
       name: responseJson.name,
