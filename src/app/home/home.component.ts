@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IPerson } from '../model/person.model';
 import { IPlanet } from '../model/planet.model';
+import { PeopleService } from '../service/people.service';
+import { PlanetService } from '../service/planet.service';
 
 @Component({
   templateUrl: './home.component.html',
@@ -16,9 +18,14 @@ export class HomeComponent implements OnInit {
   chosenPerson: IPerson = undefined;
   chosenPlace: IPlanet = undefined;
 
-  constructor() { }
+  constructor(
+    private peopleService: PeopleService,
+    private planetService: PlanetService,
+  ) { }
 
   ngOnInit() {
+    this.chosenPerson = this.peopleService.chosenPerson;
+    this.chosenPlace = this.planetService.chosenPlace;
   }
 
   browsePeople() {
@@ -26,6 +33,7 @@ export class HomeComponent implements OnInit {
     this.browsingPlaces = false;
   }
   newPerson(person) {
+    this.peopleService.chosenPerson = person;
     this.chosenPerson = person;
   }
   browsePlaces() {
@@ -34,14 +42,17 @@ export class HomeComponent implements OnInit {
   }
 
   newPlace(place) {
+    this.planetService.chosenPlace = place;
     this.chosenPlace = place;
   }
 
   updatePerson(person) {
+    this.peopleService.chosenPerson = person;
     this.chosenPerson = person;
   }
 
   updatePlace(place) {
+    this.planetService.chosenPlace = place;
     this.chosenPlace = place;
   }
 }

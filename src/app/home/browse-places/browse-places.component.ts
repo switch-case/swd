@@ -28,31 +28,18 @@ export class BrowsePlacesComponent implements OnChanges {
   @Input() chosenPlace: IPlanet;
 
   ngOnChanges() {
-    if (this.places.length < 1 && this.browsingPlaces) {
-      this.loadPlaces(this.page);
-      this.planetCount = this.planetService.getPlanetCount();
+    if (this.places.length < 1) {
+      this.planetService.loadPlaces();
+      if (this.browsingPlaces) {
+        this.places = this.planetService.places;
+        this.planetCount = this.planetService.getPlanetCount();
+      }
     }
   }
 
   loadMore() {
-    this.page++;
-    this.loadPlaces(this.page);
-  }
-
-  loadPlaces(pageNum) {
-    this.http.get('https://swapi.co/api/planets/?page=' + pageNum)
-      .subscribe(response => this.places = this.places.concat(response.json().results.map(planet => {
-        return <IPlanet>{
-          name: planet.name,
-          climate: planet.climate,
-          gravity: planet.gravity,
-          population: planet.population,
-          terrain: planet.terrain,
-          hoursPerDay: planet.rotation_period,
-          daysPerYear: planet.orbital_period,
-        };
-      }
-    )));
+    this.planetService.loadMore();
+    this.places = this.planetService.places;
   }
 
   updatePlace(place) {

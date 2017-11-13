@@ -18,11 +18,13 @@ import {
 
 import { Routes, RouterModule } from '@angular/router';
 import { PersonDetailsComponent } from './details/person-details/person-details.component';
+import { PlaceDetailsComponent } from './details/place-details/place-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home',  component: HomeComponent },
   { path: 'details/person/:id',  component: PersonDetailsComponent },
+  { path: 'details/planet/:id',  component: PlaceDetailsComponent },
 ];
 
 @NgModule({
@@ -35,7 +37,8 @@ const routes: Routes = [
     BrowsePeopleComponent,
     BrowsePlacesComponent,
     HomeComponent,
-    PersonDetailsComponent
+    PersonDetailsComponent,
+    PlaceDetailsComponent
   ],
   imports: [
     BrowserModule,
